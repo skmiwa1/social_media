@@ -2,9 +2,10 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from user.serializers import UserSerializer
+from user.serializers import UserSerializer, PartialUserSerializer
 
 User = get_user_model()
 
@@ -35,3 +36,20 @@ class UserListAPIView(generics.ListAPIView):
         if first_name:
             queryset = queryset.filter(first_name__icontains=first_name)
         return queryset
+
+
+class PartialUserUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = PartialUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(id=self.request.user.id)
+
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

@@ -41,3 +41,14 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class PartialUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "first_name",
+            "last_name",
+            "bio",
+            "picture",
+        )
