@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
-from SM.models import Post
-from SM.serializers import PostSerializer, OwnPostSerializer
+from SM.models import Post, Like
+from SM.serializers import PostSerializer, OwnPostSerializer, LikeSerializer
 
 User = get_user_model()
 
@@ -61,3 +61,8 @@ class MyPostsView(generics.ListAPIView):
         posts = Post.objects.filter(user_id=user_id)
         return posts
 
+
+class LikeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
+    # permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
