@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework import generics, permissions
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -53,3 +54,20 @@ class PartialUserUpdateAPIView(generics.UpdateAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
+
+
+class UserProfileDeleteView(generics.DestroyAPIView):
+    serializer_class = UserSerializer
+    # permission_classes = (permissions.IsAuthenticated,)
+
+    def get_object(self):
+        try:
+            profile = User.objects.get(id=self.request.user.id)
+            return profile
+        except User.DoesNotExist:
+            raise NotFound("Profile does not exist")
+
+    def delete(self, request, *args, **kwargs):
+        profile = self.get_object()
+        profile.delete()
+        return Response({"detail": "Profile has been deleted."})

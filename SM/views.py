@@ -60,3 +60,4 @@ class MyPostsView(generics.ListAPIView):
         user_id = self.request.user.id
         posts = Post.objects.filter(user_id=user_id)
         return posts
+

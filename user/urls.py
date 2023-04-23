@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from SM.views import MyPostsView
-from user.views import CreateUserView, ManageUserView, UserListAPIView, PartialUserUpdateAPIView
+from user.views import CreateUserView, ManageUserView, UserListAPIView, PartialUserUpdateAPIView, UserProfileDeleteView
 
 urlpatterns = [
     path("register/", CreateUserView.as_view(), name="create"),
@@ -19,8 +19,8 @@ urlpatterns = [
     path("me/", ManageUserView.as_view(), name="manage"),
     path("me/update", PartialUserUpdateAPIView.as_view(),
          name="me-update"),
-    # path("me/delete/", UserProfileDeleteView.as_view(),
-    #      name="me-delete"),
+    path("me/delete/", UserProfileDeleteView.as_view(),
+         name="me-delete"),
     path("my-posts/", MyPostsView.as_view(), name="my-posts"),
 ]
 
