@@ -17,7 +17,7 @@ class CreateUserView(generics.CreateAPIView):
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-    # authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
@@ -26,7 +26,7 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 
 class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         queryset = get_user_model().objects.all()
@@ -58,7 +58,7 @@ class PartialUserUpdateAPIView(generics.UpdateAPIView):
 
 class UserProfileDeleteView(generics.DestroyAPIView):
     serializer_class = UserSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_object(self):
         try:

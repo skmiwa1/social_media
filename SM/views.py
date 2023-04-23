@@ -1,20 +1,22 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
 
 from SM.models import Post, Like
+from SM.permissions import IsAdminOrIfAuthenticatedReadOnly, IsAuthorOrReadOnly
 from SM.serializers import PostSerializer, OwnPostSerializer, LikeSerializer
 
 User = get_user_model()
 
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # permission_classes = (
-    #     permissions.IsAuthenticatedOrReadOnly,
-    #     IsAuthorOrReadOnly,
-    #     IsAdminOrIfAuthenticatedReadOnly,
-    # )
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly,
+        IsAdminOrIfAuthenticatedReadOnly,
+    )
 
     @staticmethod
     def _params_to_ints(qs):
@@ -65,4 +67,4 @@ class MyPostsView(generics.ListAPIView):
 class LikeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
-    # permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)

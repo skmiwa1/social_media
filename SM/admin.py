@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from SM.models import Post
+from SM.models import Post, Like
 from user.models import User
 
-# Register your models here.
 admin.site.register(Post)
 admin.site.register(User)
+admin.site.register(Like)

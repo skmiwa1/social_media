@@ -7,8 +7,8 @@ router = routers.DefaultRouter()
 router.register("posts", PostViewSet)
 router.register("likes", LikeViewSet)
 
-app_name = "SM"
-
 urlpatterns = [
     path("", include(router.urls)),
 ]
+
+app_name = "SM"
