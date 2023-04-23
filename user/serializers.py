@@ -10,8 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = (
             "id",
-            "password",
             "email",
+            "password",
             "first_name",
             "last_name",
             "bio",
