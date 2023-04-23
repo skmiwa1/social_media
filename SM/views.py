@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 
 from SM.models import Post
-from SM.serializers import PostSerializer
+from SM.serializers import PostSerializer, OwnPostSerializer
 
 User = get_user_model()
 
@@ -51,3 +51,12 @@ class PostViewSet(viewsets.ModelViewSet):
                 {"error": "You are not authorized to update this post."},
                 status=403,
             )
+
+
+class MyPostsView(generics.ListAPIView):
+    serializer_class = OwnPostSerializer
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        posts = Post.objects.filter(user_id=user_id)
+        return posts

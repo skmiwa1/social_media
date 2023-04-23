@@ -29,3 +29,9 @@ class PostSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation.pop("user", None)
         return representation
+
+
+class OwnPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = "__all__"

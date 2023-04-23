@@ -6,6 +6,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 
+from SM.views import MyPostsView
 from user.views import CreateUserView, ManageUserView, UserListAPIView, PartialUserUpdateAPIView
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
          name="me-update"),
     # path("me/delete/", UserProfileDeleteView.as_view(),
     #      name="me-delete"),
+    path("my-posts/", MyPostsView.as_view(), name="my-posts"),
 ]
 
 app_name = "user"
